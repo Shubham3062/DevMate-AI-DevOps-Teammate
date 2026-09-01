@@ -1,1 +1,350 @@
+Northstar Technologies — Synthetic Enterprise Environment
+Engineering & DevOps Organizational Knowledge Base
+KB Version: 1.0
+Classification: Internal
+Owner: Platform Engineering
+Last Reviewed: 2026-08-15
+________________________________________
+1. Organization
+Northstar Technologies operates a cloud-native SaaS platform primarily hosted on AWS.
+The engineering organization is divided into:
+Platform Engineering
+Application Engineering
+Security Engineering
+Data Engineering
+SRE
+Developer Experience
+Platform Engineering owns shared infrastructure and cloud standards.
+SRE owns reliability, observability and incident response.
+Application teams own application code and application-specific deployment configuration.
+________________________________________
+2. Engineering Environments
+Northstar uses three primary environments:
+development
+staging
+production
+AWS accounts are separated by environment.
+Development
+Used for:
+•	Feature development
+•	Infrastructure experimentation
+•	Integration testing
+Production data must never be copied into development.
+Staging
+Used for:
+•	Release validation
+•	Performance testing
+•	Pre-production integration
+Staging should closely resemble production architecture.
+Production
+Used for customer-facing workloads.
+Production changes require approved change management.
+________________________________________
+3. AWS Account Standards
+Naming convention:
+northstar-dev
+northstar-staging
+northstar-prod
+Resources must include environment metadata.
+Required tags:
+Environment
+Owner
+Application
+CostCenter
+ManagedBy
+DataClassification
+Example:
+Environment=production
+Owner=platform-engineering
+Application=payments-api
+CostCenter=CC-104
+ManagedBy=terraform
+DataClassification=internal
+________________________________________
+4. Infrastructure as Code
+Terraform is the default infrastructure provisioning tool.
+Production infrastructure must not be created manually through the AWS Console unless an emergency procedure explicitly permits it.
+Terraform repositories follow:
+main
+develop
+feature/*
+Production deployments occur only through the approved CI/CD pipeline.
+Terraform state is remotely stored and must never be committed to Git.
+________________________________________
+5. Terraform Ownership
+Platform Engineering owns:
+AWS networking
+IAM baseline
+EKS clusters
+Shared observability
+Terraform modules
+Security controls
+Application Engineering owns:
+Application-specific infrastructure
+Application deployment configuration
+Service-level resources
+________________________________________
+6. Kubernetes Standards
+Production workloads run on Amazon EKS.
+Namespaces follow:
+<team>-<application>
+Examples:
+payments-api
+identity-api
+customer-platform
+Production workloads must define:
+CPU requests
+Memory requests
+CPU limits
+Memory limits
+Readiness probes
+Liveness probes where appropriate
+Production deployments must use approved container registries.
+________________________________________
+7. Deployment Standard
+Production deployments are performed through Git-based CI/CD.
+Preferred flow:
+Pull Request
+    ↓
+Code Review
+    ↓
+Automated Tests
+    ↓
+Security Scan
+    ↓
+Build Image
+    ↓
+Deploy to Staging
+    ↓
+Validation
+    ↓
+Production Approval
+    ↓
+Production Deployment
+Direct production deployment from a developer workstation is prohibited.
+________________________________________
+8. Observability
+Production applications must provide:
+Application logs
+Infrastructure metrics
+Application metrics where applicable
+Distributed traces for supported services
+Health checks
+Deployment metadata
+Central monitoring is used for:
+CPU
+Memory
+Error rate
+Latency
+Availability
+Container health
+AWS service health
+________________________________________
+9. Incident Severity
+SEV-1
+Critical customer-facing outage or security incident.
+Response:
+Immediate escalation
+Incident commander assigned
+Executive notification where required
+Continuous investigation
+SEV-2
+Major degradation affecting a significant portion of users.
+Response:
+On-call engineer
+Platform/SRE involvement
+Active investigation
+SEV-3
+Limited impact or non-critical operational issue.
+Response:
+Normal engineering workflow
+Ticket required
+________________________________________
+10. Production Access
+Production access follows least privilege.
+Junior engineers normally have:
+Read-only production access
+Log access
+Monitoring access
+Limited diagnostic permissions
+Senior engineers may receive:
+Expanded diagnostic permissions
+Approved operational permissions
+Architects and platform leads may have:
+Architecture-level access
+Emergency privileges
+Privileged operations require appropriate authorization.
+________________________________________
+11. AI Agent Permissions
+The AI DevOps Teammate follows the user's organizational role.
+Junior Engineer
+Allowed:
+Read infrastructure state
+Read logs
+Read metrics
+Read Kubernetes state
+Read Terraform plans
+Query documentation
+Not automatically allowed:
+Production deletion
+IAM modification
+Security-group modification
+Terraform apply
+Kubernetes destructive operations
+Senior Engineer
+Allowed:
+Advanced diagnostics
+Approved remediation workflows
+Production investigation
+Destructive operations still require policy approval.
+Architect
+Allowed:
+Architecture analysis
+Cross-system investigation
+Infrastructure design recommendations
+Policy analysis
+The architect role does not automatically bypass security controls.
+________________________________________
+12. Secrets
+Secrets must be stored using approved secret-management systems.
+The AI agent must never return:
+Passwords
+API keys
+AWS secret keys
+Private keys
+Session tokens
+Database credentials
+The agent may confirm:
+Secret exists
+Secret is missing
+Secret rotation is required
+Secret access failed
+without exposing its value.
+________________________________________
+13. Change Management
+Production changes must contain:
+Change description
+Reason
+Risk
+Affected resources
+Rollback plan
+Validation plan
+Approver
+Emergency changes require post-incident documentation.
+________________________________________
+14. AI Incident Investigation Policy
+The AI agent must follow:
+Observe
+    ↓
+Collect evidence
+    ↓
+Correlate
+    ↓
+Compare with organizational standard
+    ↓
+Determine probable cause
+    ↓
+Recommend remediation
+    ↓
+Request approval
+    ↓
+Execute only if authorized
+    ↓
+Verify result
+    ↓
+Record audit event
+The agent must never skip directly from:
+User request → production modification
+________________________________________
+15. Source-of-Truth Hierarchy
+For organization-specific questions:
+1. Live infrastructure evidence
+2. Approved organizational documentation
+3. Approved architecture records
+4. Approved runbooks
+5. Vendor documentation
+6. General model knowledge
+If the sources conflict, the agent must explain the conflict.
+________________________________________
+16. Unknown Information
+If the knowledge base does not contain the required organization-specific information, the agent must say:
+"I don't have sufficient organizational context to answer this reliably."
+It must NOT invent:
+team ownership
+AWS account IDs
+production architecture
+security policies
+incident procedures
+approval requirements
+resource names
+________________________________________
+17. Knowledge Base Metadata
+Every document should contain:
+document_id:
+title:
+owner:
+team:
+classification:
+environment:
+application:
+version:
+effective_date:
+review_date:
+source:
+authority:
+Example:
+document_id: NS-SEC-004
+title: Production Access Standard
+owner: Security Engineering
+team: Security
+classification: Internal
+environment: production
+version: 2.1
+effective_date: 2026-07-01
+review_date: 2026-10-01
+authority: Policy
+________________________________________
+18. Knowledge Lifecycle
+Documents follow:
+Draft
+ ↓
+Review
+ ↓
+Approved
+ ↓
+Published
+ ↓
+Indexed
+ ↓
+Consumed by Agent
+ ↓
+Periodic Review
+ ↓
+Updated / Archived
+Expired or superseded documents must not be treated as authoritative.
+________________________________________
+19. Agent Grounding Requirement
+When an answer depends on organizational policy, the agent should provide the source:
+Source:
+NS-SEC-004 — Production Access Standard
+
+Relevant policy:
+Junior engineers have read-only production access.
+The agent should distinguish between:
+ORGANIZATIONAL FACT
+LIVE INFRASTRUCTURE FACT
+MODEL INFERENCE
+RECOMMENDATION
+________________________________________
+20. Golden Rule
+The AI DevOps Teammate should behave like a cautious senior engineer:
+Do not guess.
+Do not fabricate organizational context.
+Do not expose secrets.
+Do not execute destructive operations without authorization.
+Do not confuse documentation with live infrastructure.
+Do not confuse recommendations with facts.
+Always show evidence.
+Always identify uncertainty.
+
 
