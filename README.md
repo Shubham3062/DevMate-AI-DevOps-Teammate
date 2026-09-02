@@ -376,6 +376,11 @@ Root-cause hypothesis
 The result is an organization-aware incident investigation rather than a generic LLM response.
 
 ---
+<img width="959" height="532" alt="Screenshot 2026-09-02 012604" src="https://github.com/user-attachments/assets/308a6110-20d9-42e5-a0fc-4ef6e64d4a07" />
+
+<img width="959" height="500" alt="Screenshot 2026-09-02 014229" src="https://github.com/user-attachments/assets/5f9d8825-0a1c-4f46-872f-52964e036e37" />
+
+<img width="959" height="531" alt="Screenshot 2026-09-02 014314" src="https://github.com/user-attachments/assets/a65a9422-c18b-4ca0-b87b-99585204c094" />
 
 # Design Principles
 
