@@ -415,27 +415,6 @@ The agent should distinguish facts from hypotheses and recommendations.
 
 ---
 
-# Current Status
-
-```text
-[x] Agent architecture
-[x] Organization knowledge model
-[x] Terraform troubleshooting skill
-[x] Kubernetes troubleshooting skill
-[x] AWS troubleshooting skill
-[x] RBAC concept
-[x] Policy concept
-[x] Evidence model
-[ ] MCP integrations
-[ ] SIM.ai implementation
-[ ] Evaluation suite
-[ ] Security testing
-[ ] Demo scenarios
-[ ] Production architecture
-```
-
----
-
 # Project Goals
 
 The goal of this project is not to build another AI chatbot.
