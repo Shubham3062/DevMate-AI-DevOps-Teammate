@@ -484,13 +484,72 @@ Use:
 
 ```json
 {
-  "request_type": "string",
-  "answer": "string",
-  "policy_decision": "string",
-  "human_approval_required": true,
-  "confidence": 0,
-  "evidence": ["string"],
-  "tools_used": ["string"]
+  "name": "devmate_investigation",
+  "schema": {
+    "additionalProperties": false,
+    "properties": {
+      "answer": {
+        "description": "The complete human-readable markdown answer for the engineer, following the length and format rules in the system prompt.",
+        "type": "string"
+      },
+      "confidence": {
+        "description": "Confidence in the answer or root cause assessment.",
+        "enum": [
+          "high",
+          "medium",
+          "low"
+        ],
+        "type": "string"
+      },
+      "evidence": {
+        "description": "Facts actually relied on: organizational knowledge retrieved from the knowledge base and live infrastructure evidence. Empty array if none.",
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "human_approval_required": {
+        "description": "Whether human approval is required before any action is taken.",
+        "type": "boolean"
+      },
+      "policy_decision": {
+        "description": "The governance decision applied to this request, echoed verbatim from the workflow policy result.",
+        "enum": [
+          "ALLOW",
+          "DENY",
+          "REQUIRE_APPROVAL",
+          "CLARIFICATION_REQUIRED"
+        ],
+        "type": "string"
+      },
+      "request_type": {
+        "description": "Whether this is a simple informational/knowledge question or a troubleshooting/incident investigation.",
+        "enum": [
+          "INFORMATION",
+          "TROUBLESHOOTING"
+        ],
+        "type": "string"
+      },
+      "tools_used": {
+        "description": "Names of tools, skills or MCP servers actually invoked. Empty array if none.",
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      }
+    },
+    "required": [
+      "request_type",
+      "policy_decision",
+      "human_approval_required",
+      "confidence",
+      "evidence",
+      "tools_used",
+      "answer"
+    ],
+    "type": "object"
+  },
+  "strict": true
 }
 ```
 
