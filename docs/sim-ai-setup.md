@@ -905,6 +905,3 @@ If live infrastructure evidence is unavailable, it should not pretend that it ha
 
 That is what makes DevMate more than a generic AI chatbot and more of a **governed AI DevOps teammate**.
 
-```
-```
-
